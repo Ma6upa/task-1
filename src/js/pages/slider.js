@@ -1,26 +1,27 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { changeValue } from '../redux/actions';
+import { setVariable } from '../redux/actions';
 
 class Slider extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { variable: 'test' }
-    console.log(this.state.variable)
-  }
-
-  handleChangeValue = () => {
-    this.props.changeValue(this.state.variable)
+    this.state = { variables: 'test' }
+    console.log(this.state.variables)
   }
 
   render() {
-    this.handleChangeValue()
+    this.props.setVariable(this.state.variables)
+    console.log(this.props.variable)
     return (
       <p>
-        хд
+        o
       </p>
     )
   }
 }
 
-export default connect(null, { changeValue })(Slider)
+const mapStateToProps = state => ({
+  variable: state.variable
+})
+
+export default connect(mapStateToProps, { setVariable })(Slider)
