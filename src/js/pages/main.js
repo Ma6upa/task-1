@@ -5,10 +5,10 @@ class Main extends React.Component {
 
   render() {
     return (
-          <div>
-            HELLO
-            <Link to="/slider"><button>Слайдер</button></Link>
-          </div>
+      <div>
+        HELLO
+        <Link to="/slider"><div className="buttonBlock">Слайдер</div></Link>
+      </div>
     )
   }
 }

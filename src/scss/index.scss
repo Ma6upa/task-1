@@ -1,4 +1,4 @@
-@import './components/_reset.scss';
+@import "./components/reset";
 
 div {
   margin: 0 auto;
@@ -9,7 +9,8 @@ div {
   font-size: 18px;
   margin-top: 50px;
 
-  button {
+  .buttonBlock {
+    margin-top: 10px;
     background-color: black;
     color: white;
     text-decoration: underline;
