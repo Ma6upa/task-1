@@ -1,21 +1,21 @@
-import { NEXT_IMAGE, PREV_IMAGE, SET_SOURCE, SET_RESULT } from './actionTypes';
+import { NEXT_IMAGE, PREV_IMAGE, SET_SOURCE, SET_REMOTE } from './actionTypes';
 
 export const setNextImage = (nextImageId) => ({
   type: NEXT_IMAGE,
-  payload: nextImageId
+  nextImageId: nextImageId
 })
 
 export const setPrevImage = (prevImageId) => ({
   type: PREV_IMAGE,
-  payload: prevImageId
+  prevImageId: prevImageId
 })
 
 export const setSource = (source) => ({
   type: SET_SOURCE,
-  payload: source,
+  source: source,
 })
 
-export const setResult = (result) => ({
-  type: SET_RESULT,
-  payload: result,
+export const setRemote = (result) => ({
+  type: SET_REMOTE,
+  result: result,
 })

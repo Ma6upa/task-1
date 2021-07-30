@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { setNextImage, setPrevImage, setSource, setResult } from '../redux/actions';
+import { setNextImage, setPrevImage, setSource, setRemote } from '../redux/actions';
 import { Link } from 'react-router-dom';
 
 class Slider extends React.Component {
@@ -20,7 +20,7 @@ class Slider extends React.Component {
   remoteImages = async () => {
     let response = await fetch('https://imagesapi.osora.ru/');
     let result = await response.json();
-    this.props.setResult(result)
+    this.props.setRemote(result)
   }
 
   switchSource = () => {
@@ -82,4 +82,4 @@ const mapStateToProps = state => {
   return state
 }
 
-export default connect(mapStateToProps, { setPrevImage, setNextImage, setSource, setResult })(Slider)
+export default connect(mapStateToProps, { setPrevImage, setNextImage, setSource, setRemote })(Slider)
