@@ -7,7 +7,7 @@ class Main extends React.Component {
     return (
       <div>
         HELLO
-        <Link to="/slider"><div className="buttonBlock">Слайдер</div></Link>
+        <Link to="/slider"><div className="buttonBlockUnderline">Слайдер</div></Link>
       </div>
     )
   }

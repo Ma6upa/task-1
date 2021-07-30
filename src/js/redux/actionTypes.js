@@ -1,1 +1,4 @@
-export const CHANGE_VALUE = "CHANGE_VALUE";
+export const NEXT_IMAGE = "NEXT_IMAGE";
+export const PREV_IMAGE = "PREV_IMAGE";
+export const SET_SOURCE = "SET_SOURCE";
+export const SET_RESULT = "SET_RESULT";

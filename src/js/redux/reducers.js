@@ -1,17 +1,34 @@
-import { setVariable } from "./actions";
-import { CHANGE_VALUE } from "./actionTypes";
+import { NEXT_IMAGE, PREV_IMAGE, SET_RESULT, SET_SOURCE } from "./actionTypes";
 import { initialState } from "./initialState";
 
-export default function reducer(state = initialState, action = setVariable) {
+export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case CHANGE_VALUE: {
+    case NEXT_IMAGE: {
       return {
         ...state,
-        variable: action.variable + '_newTest'
+        imageId: action.payload
+      }
+    }
+    case PREV_IMAGE: {
+      return {
+        ...state,
+        imageId: action.payload
+      }
+    }
+    case SET_SOURCE: {
+      return {
+        ...state,
+        imgSource: action.payload
+      }
+    }
+    case SET_RESULT: {
+      return {
+        ...state,
+        remote: action.payload
       }
     }
     default:
-      return state;
+      return state
   }
 }
 
