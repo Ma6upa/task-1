@@ -20,7 +20,7 @@ class Slider extends React.Component {
 
   componentDidMount() {
     this.remoteImages()
-    this.setLength()
+    this.getImages()
   }
 
   remoteImages = async () => {
@@ -33,16 +33,16 @@ class Slider extends React.Component {
     this.setState({ isRemote: !this.state.isRemote })
   }
 
-  setLength = () => {
-    if (this.state.isRemote === false) {
-      this.setState({ length: this.state.local.length })
+  getImages = () => {
+    if (this.state.isRemote) {
+      return this.state.remote = this.props.remote
     } else {
-      this.setState({ length: this.props.remote.length })
+      return this.state.local
     }
   }
 
   nextImage = () => {
-    if (this.state.imageId !== this.state.length - 1) {
+    if (this.state.imageId !== this.getImages().length - 1) {
       this.setState({ imageId: this.state.imageId + 1 })
     } else {
       this.setState({ imageId: 0 })
@@ -53,7 +53,7 @@ class Slider extends React.Component {
     if (this.state.imageId !== 0) {
       this.setState({ imageId: this.state.imageId - 1 })
     } else {
-      this.setState({ imageId: this.state.length - 1 })
+      this.setState({ imageId: this.getImages().length - 1 })
     }
   }
 
@@ -62,8 +62,7 @@ class Slider extends React.Component {
       <div className="container">
         <div className="slider__container">
           <div className="buttonBlock" onClick={this.prevImage}>prev</div>
-          <img className="imagesBlock" alt="" src={this.state.isRemote === false ?
-            this.state.local[this.state.imageId] : this.props.remote[this.state.imageId]} />
+          <img className="imagesBlock" alt="" src={this.getImages()[this.state.imageId]} />
           <div className="buttonBlock" onClick={this.nextImage}>next</div>
         </div>
         <div className="buttons__container">
