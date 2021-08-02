@@ -1,14 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { setNextImage, setPrevImage, setSource, setRemote } from '../redux/actions';
+import { setRemote } from '../redux/actions';
 import { Link } from 'react-router-dom';
 
 class Slider extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      imgSource: 'local',
       length: 0,
+      isRemote: false,
+      imageId: 0,
+      local: [
+        "https://example-reactjs-task2.public.osora.ru/static/media/0.c3b84712.jpg",
+        "https://example-reactjs-task2.public.osora.ru/static/media/1.67af6503.jpg",
+        "https://example-reactjs-task2.public.osora.ru/static/media/2.a6db64e7.jpg"
+      ],
     }
   }
 
@@ -24,35 +30,30 @@ class Slider extends React.Component {
   }
 
   switchSource = () => {
-    if (this.props.imgSource === 'local') {
-      this.props.setSource('remote')
-    } else if (this.props.imgSource === 'remote') {
-      this.props.setSource('local')
-    }
-    this.setLength()
+    this.setState({ isRemote: !this.state.isRemote })
   }
 
   setLength = () => {
-    if (this.props.imgSource === 'local') {
-      this.setState({ length: this.props.local.length })
+    if (this.state.isRemote === false) {
+      this.setState({ length: this.state.local.length })
     } else {
       this.setState({ length: this.props.remote.length })
     }
   }
 
   nextImage = () => {
-    if (this.props.imageId !== this.state.length - 1) {
-      this.props.setNextImage(this.props.imageId + 1)
+    if (this.state.imageId !== this.state.length - 1) {
+      this.setState({ imageId: this.state.imageId + 1 })
     } else {
-      this.props.setNextImage(0)
+      this.setState({ imageId: 0 })
     }
   }
 
   prevImage = () => {
-    if (this.props.imageId !== 0) {
-      this.props.setPrevImage(this.props.imageId - 1)
+    if (this.state.imageId !== 0) {
+      this.setState({ imageId: this.state.imageId - 1 })
     } else {
-      this.props.setPrevImage(this.state.length - 1)
+      this.setState({ imageId: this.state.length - 1 })
     }
   }
 
@@ -61,16 +62,13 @@ class Slider extends React.Component {
       <div className="container">
         <div className="slider__container">
           <div className="buttonBlock" onClick={this.prevImage}>prev</div>
-          {(this.props.imgSource === 'local') ?
-            <img className="imagesBlock" alt="local" src={this.props.local[this.props.imageId]} />
-            :
-            <img className="imagesBlock" alt="remote" src={this.props.remote[this.props.imageId]} />
-          }
+          <img className="imagesBlock" alt="" src={this.state.isRemote === false ?
+            this.state.local[this.state.imageId] : this.props.remote[this.state.imageId]} />
           <div className="buttonBlock" onClick={this.nextImage}>next</div>
         </div>
         <div className="buttons__container">
           <div className="buttonBlockSwitch" onClick={this.switchSource}>
-            switch to {this.props.imgSource === 'local' ? 'remote' : 'local'}</div>
+            switch to {this.state.isRemote === false ? 'remote' : 'local'}</div>
           <Link to="/"><div className="buttonBlockUnderline">back to main</div></Link>
         </div>
       </div>
@@ -82,4 +80,4 @@ const mapStateToProps = state => {
   return state
 }
 
-export default connect(mapStateToProps, { setPrevImage, setNextImage, setSource, setRemote })(Slider)
+export default connect(mapStateToProps, { setRemote })(Slider)
