@@ -20,7 +20,6 @@ class Slider extends React.Component {
 
   componentDidMount() {
     this.remoteImages()
-    this.getImages()
   }
 
   remoteImages = async () => {
@@ -34,11 +33,7 @@ class Slider extends React.Component {
   }
 
   getImages = () => {
-    if (this.state.isRemote) {
-      return this.state.remote = this.props.remote
-    } else {
-      return this.state.local
-    }
+    return this.state.isRemote ? this.props.remote : this.state.local
   }
 
   nextImage = () => {
