@@ -1,0 +1,1 @@
+export const SET_REMOTE = "SET_REMOTE";
