@@ -6,15 +6,19 @@ import {
 } from 'react-native';
 import { NativeRouter, Route } from "react-router-native";
 import Player from './components/player';
+import store from './redux/index'
+import { Provider } from 'react-redux';
 
 class App extends React.Component {
   render() {
     return (
-      <NativeRouter>
-        <Route exact path="/" component={Main}></Route>
-        <Route path="/slider" component={Slider}></Route>
-        <Route path="/player" component={Player}></Route>
-      </NativeRouter>
+      <Provider store={store}>
+        <NativeRouter>
+          <Route exact path="/" component={Main}></Route>
+          <Route path="/slider" component={Slider}></Route>
+          <Route path="/player" component={Player}></Route>
+        </NativeRouter>
+      </Provider>
     );
   }
 };
