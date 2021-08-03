@@ -1,11 +1,9 @@
-import Main from './components/main'
-import Slider from './components/slider'
+import Main from './pages/main'
+import Slider from './pages/slider'
 import React from 'react';
-import {
-  StyleSheet,
-} from 'react-native';
+import {StyleSheet} from 'react-native';
 import { NativeRouter, Route } from "react-router-native";
-import Player from './components/player';
+import Player from './pages/player';
 import store from './redux/index'
 import { Provider } from 'react-redux';
 
@@ -31,6 +29,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     flex: 0.2
   },
+
   footerElement: {
     position: 'relative',
     backgroundColor: 'black',
@@ -38,6 +37,7 @@ const styles = StyleSheet.create({
     width: 100,
     alignItems: 'center',
   },
+
   footerElementText: {
     color: 'white',
     zIndex: 9999,

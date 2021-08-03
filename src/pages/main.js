@@ -30,14 +30,17 @@ const styles = StyleSheet.create({
     textAlignVertical: 'center',
     marginTop: 300,
   },
+
   mainText: {
     fontSize: 30,
   },
+
   mainButton: {
     backgroundColor: 'black',
     fontSize: 30,
     color: 'white'
   },
+
   mainButtonText: {
     fontSize: 30,
     color: 'white',
