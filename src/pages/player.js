@@ -7,7 +7,9 @@ class Player extends React.Component {
   render() {
     return (
       <View style={styles.contentContainer}>
-        <View ><Text>Здесь будет Плеер</Text></View>
+        <View >
+          <Text>Здесь будет Плеер</Text>
+        </View>
         <Menu />
       </View>
     )

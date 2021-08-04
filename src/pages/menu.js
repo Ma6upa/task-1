@@ -9,28 +9,28 @@ const Menu = () => {
       key: 1,
       link: '/',
       text: 'Главная',
-      touchHandler: () => {},
+      touchHandler: () => { },
     },
     {
       key: 2,
       link: '/slider',
       text: 'Слайдер',
-      touchHandler: () => {},
+      touchHandler: () => { },
     },
     {
       key: 3,
       link: '/player',
       text: 'Плеер',
-      touchHandler: () => {},
+      touchHandler: () => { },
     },
     {
       key: 4,
       text: 'Ссылка',
-      touchHandler: () => Linking.openURL('https://q-digital.org'),    
+      touchHandler: () => Linking.openURL('https://q-digital.org'),
     },
     {
       key: 5,
-      touchHandler:  BackHandler.exitApp,
+      touchHandler: BackHandler.exitApp,
       text: 'Выйти',
     }
   ];
