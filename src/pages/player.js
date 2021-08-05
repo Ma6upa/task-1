@@ -1,26 +1,55 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
 import Menu from './menu';
 import styles from '../styles/player.component.styles';
 import { connect } from 'react-redux';
 import { setRemote } from '../redux/actions';
-import TrackPlayer from 'react-native-track-player';
+import TrackPlayer, { Capability } from 'react-native-track-player';
 
 class Player extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
       playlist: [
-        'https://music.yandex.ru/album/3595068/track/28124',
-        'https://music.yandex.ru/album/2490405/track/7788',
-        'https://music.yandex.ru/album/62233/track/630670',
+        {
+          url: '../audio/blink.mp3',
+          title: 'Stay',
+          artist: 'Blink-182'
+        },
+        {
+          url: '../audio/sum.mp3',
+          titlle: 'in too deep',
+          artist: 'Sum-41'
+        },
+        {
+          url: '../audio/off.mp3',
+          title: 'go far',
+          artist: 'The Offspring'
+        }
       ],
     }
   }
 
-  componentDidMount() {
-    this.remoteTracks()
-    this.getTracks()
+  async componentDidMount() {
+    await this.remoteTracks()
+    await TrackPlayer.updateOptions({
+      stopWithApp: true,
+      capabilities: [
+        TrackPlayer.CAPABILITY_PLAY,
+        TrackPlayer.CAPABILITY_PAUSE,
+        TrackPlayer.CAPABILITY_SKIP_TO_NEXT,
+        TrackPlayer.CAPABILITY_SKIP_TO_PREVIOUS,
+      ],
+      compactCapabilities: [
+        TrackPlayer.CAPABILITY_PLAY,
+        TrackPlayer.CAPABILITY_PAUSE,
+      ]
+    });
+    TrackPlayer.registerPlaybackService(() => require('../service'));
+    TrackPlayer.setupPlayer()
+    TrackPlayer.add(this.state.playlist)
+    this.capability()
   }
 
   remoteTracks = async () => {
@@ -29,34 +58,33 @@ class Player extends React.Component {
     this.props.setRemote(result);
   }
 
-  getTracks = () => {
-    this.setState({ playlist: this.state.playlist.concat(this.props.remote) })
-    console.log(this.state.playlist)
-  }
+  // getTracks = () => {
+  //   this.setState({ playlist: this.state.playlist.concat(this.props.remote) })
+  //   return this.state.playlist
+  // }
 
-  start = async () => {
-    // Set up the player
-    await TrackPlayer.setupPlayer();
-
-    // Add a track to the queue
-    await TrackPlayer.add({
-      id: 'trackId',
-      url: require('track.mp3'),
-      title: 'Track Title',
-      artist: 'Track Artist',
-      artwork: require('track.png')
-    });
-
-    // Start playing it
-    await TrackPlayer.play();
-  };
-  //start();
   render() {
-    this.state.getTracks();
     return (
       <View style={styles.contentContainer}>
-        <View>
-          <Text>Здесь будет Плеер</Text>
+        <View >
+          <View >
+            <TouchableOpacity
+              onPress={() => this.TrackPlayer.pause()}>
+              <Text >Pause</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => this.TrackPlayer.play()}>
+              <Text >Play</Text>
+            </TouchableOpacity>
+          </View>
+          <View >
+            <TouchableOpacity
+              onPress={() => this.TrackPlayer.skipToPrevious()}>
+              <Text>Prev</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => this.TrackPlayer.skipToNext()}>
+              <Text >Next</Text>
+            </TouchableOpacity>
+          </View>
         </View>
         <Menu />
       </View>

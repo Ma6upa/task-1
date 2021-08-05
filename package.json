@@ -1,5 +1,5 @@
 {
-  "name": "task3",
+  "name": "task",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -12,12 +12,11 @@
   "dependencies": {
     "@reduxjs/toolkit": "^1.6.1",
     "react": "17.0.1",
-    "react-native": "^0.62.0",
+    "react-native": "0.64.2",
     "react-native-track-player": "^1.2.7",
     "react-redux": "^7.2.4",
-    "react-router-dom": "^5.2.0",
     "react-router-native": "^5.2.0",
-    "redux": "^4.1.0"
+    "redux": "^4.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
