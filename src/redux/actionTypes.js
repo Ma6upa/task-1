@@ -1,1 +1,2 @@
 export const SET_REMOTE = "SET_REMOTE";
+export const SET_REMOTE_AUDIO = "SET_REMOTE_AUDIO"
