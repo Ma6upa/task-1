@@ -1,4 +1,4 @@
-package com.task3;
+package com.last2;
 
 import com.facebook.react.ReactActivity;
 
@@ -10,6 +10,6 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected String getMainComponentName() {
-    return "task3";
+    return "last2";
   }
 }
