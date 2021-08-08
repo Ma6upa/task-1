@@ -3,56 +3,48 @@ import styles from '../styles/menu.component.styles'
 import { Text, View, Linking, TouchableOpacity, BackHandler } from 'react-native';
 import { Link } from "react-router-native";
 
+const list = [
+  {
+    link: '/',
+    text: 'Главная',
+  },
+  {
+    link: '/slider',
+    text: 'Слайдер',
+  },
+  {
+    link: '/player',
+    text: 'Плеер',
+  },
+  {
+    text: 'Ссылка',
+    onPress: () => Linking.openURL('https://q-digital.org'),
+  },
+  {
+    text: 'Выйти',
+    onPress: BackHandler.exitApp,
+  }
+];
+
+const _onPress = () => false;
+
 const Menu = () => {
-  const list = [
-    {
-      key: 1,
-      link: '/',
-      text: 'Главная',
-      touchHandler: () => {},
-    },
-    {
-      key: 2,
-      link: '/slider',
-      text: 'Слайдер',
-      touchHandler: () => {},
-    },
-    {
-      key: 3,
-      link: '/player',
-      text: 'Плеер',
-      touchHandler: () => {},
-    },
-    {
-      key: 4,
-      text: 'Ссылка',
-      touchHandler: () => Linking.openURL('https://q-digital.org'),    
-    },
-    {
-      key: 5,
-      touchHandler:  BackHandler.exitApp,
-      text: 'Выйти',
-    }
-  ];
-
-  const menu = () => {
-    return list.map((element) => {
-      const Content = element.link ? Link : View
-      return (
-        <TouchableOpacity onPress={element.touchHandler}>
-          <Content to={element.link}>
-            <View style={styles.footerElement}>
-              <Text style={styles.footerElementText}>{element.text}</Text>
-            </View>
-          </Content>
-        </TouchableOpacity>
-      );
-    });
-  };
-
   return (
     <View style={styles.footer}>
-      {menu()}
+      {list.map((element, key) => {
+        const Content = element.link ? Link : View;
+        const onPress = element.onPress || _onPress;
+
+        return (
+          <TouchableOpacity key={key} onPress={onPress}>
+            <Content to={element.link}>
+              <View style={styles.footerElement}>
+                <Text style={styles.footerElementText}>{element.text}</Text>
+              </View>
+            </Content>
+          </TouchableOpacity>
+        )
+      })}
     </View>
   );
 }

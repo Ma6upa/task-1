@@ -22,6 +22,7 @@ class Player extends React.Component {
     let response = await fetch("https://imagesapi.osora.ru/?isAudio=true");
     let result = await response.json();
     this.props.setRemoteAudio(result);
+
     this.setState({ playlist: localAudio.concat(this.props.remoteAudio.map(url => { return { url } })) });
 
     await TrackPlayer.updateOptions({
@@ -36,6 +37,9 @@ class Player extends React.Component {
       compactCapabilities: [
         TrackPlayer.CAPABILITY_PLAY,
         TrackPlayer.CAPABILITY_PAUSE,
+        TrackPlayer.CAPABILITY_STOP,
+        TrackPlayer.CAPABILITY_SKIP_TO_PREVIOUS,
+        TrackPlayer.CAPABILITY_SKIP_TO_NEXT,
       ]
     });
     TrackPlayer.setupPlayer();
@@ -43,13 +47,14 @@ class Player extends React.Component {
     this.capability();
   }
 
-  componentWillUnmount() {
-    TrackPlayer.stop();
+  componentWillUnmount = () => {
+    return;
   }
 
   capability = () => {
     TrackPlayer.addEventListener('remote-play', this.playPause)
     TrackPlayer.addEventListener('remote-pause', this.playPause)
+    TrackPlayer.addEventListener('remote-stop', this.stop)
     TrackPlayer.addEventListener('remote-stop', () => TrackPlayer.stop())
     TrackPlayer.addEventListener('remote-previous', this.prev)
     TrackPlayer.addEventListener('remote-next', this.next)
@@ -74,16 +79,24 @@ class Player extends React.Component {
     }
   }
 
+  stop = async () => {
+    this.setState({ isPlaying: false })
+  }
+
   next = async () => {
-    await TrackPlayer.skipToNext();
-    await TrackPlayer.play();
-    this.setState({ isPlaying: true })
+    try {
+      await TrackPlayer.skipToNext();
+      await TrackPlayer.play();
+      this.setState({ isPlaying: true })
+    } catch { }
   }
 
   prev = async () => {
-    await TrackPlayer.skipToPrevious();
-    await TrackPlayer.play();
-    this.setState({ isPlaying: true })
+    try {
+      await TrackPlayer.skipToPrevious();
+      await TrackPlayer.play();
+      this.setState({ isPlaying: true })
+    } catch { }
   }
 
   render() {
