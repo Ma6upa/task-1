@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, TouchableOpacity, View } from 'react-native';
+import { AppState, Text, TouchableOpacity, View } from 'react-native';
 import Menu from './menu';
 import TrackPlayer from "react-native-track-player";
 import localAudio from '../audio/audio'
@@ -15,6 +15,7 @@ class Player extends React.Component {
       playlist: [],
       artist: '',
       title: '',
+      appState: AppState.currentState,
     }
   }
 
@@ -45,11 +46,22 @@ class Player extends React.Component {
     TrackPlayer.setupPlayer();
     TrackPlayer.add(this.state.playlist);
     this.capability();
+    AppState.addEventListener("change", this._handleAppStateChange);
   }
 
   componentWillUnmount = () => {
-    return;
+    AppState.removeEventListener("change", this._handleAppStateChange);
+    TrackPlayer.stop();
+    this.setState({ isPlaying: false })
   }
+
+  _handleAppStateChange = (nextAppState) => {
+    if (this.state.appState.match(/active/) && nextAppState === "inactive" || "background") {
+      TrackPlayer.stop()
+      this.setState({ appState: nextAppState });
+      this.setState({ isPlaying: false })
+    }
+  };
 
   capability = () => {
     TrackPlayer.addEventListener('remote-play', this.playPause)
