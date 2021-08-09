@@ -1,11 +1,17 @@
 import React from 'react'
 import { AppState, Text, TouchableOpacity, View } from 'react-native';
-import Menu from './menu';
-import TrackPlayer from "react-native-track-player";
+import Menu from '../components/menu';
+import TrackPlayer, { pause, play, TrackPlayerEvents } from "react-native-track-player";
 import localAudio from '../audio/audio'
 import { connect } from 'react-redux'
 import { setRemoteAudio } from '../redux/actions'
 import styles from '../styles/player.component.styles'
+
+const APP_STATES = {
+  active: 'active',
+  inactive: 'inactive',
+  background: 'background'
+}
 
 class Player extends React.Component {
   constructor(props) {
@@ -22,10 +28,8 @@ class Player extends React.Component {
   async componentDidMount() {
     let response = await fetch("https://imagesapi.osora.ru/?isAudio=true");
     let result = await response.json();
-    this.props.setRemoteAudio(result);
-
+    this.props.setRemoteAudio(result)
     this.setState({ playlist: localAudio.concat(this.props.remoteAudio.map(url => { return { url } })) });
-
     await TrackPlayer.updateOptions({
       stopWithApp: true,
       capabilities: [
@@ -45,33 +49,44 @@ class Player extends React.Component {
     });
     TrackPlayer.setupPlayer();
     TrackPlayer.add(this.state.playlist);
-    this.capability();
+    this.addListeners();
+    //this.useListeners();
     AppState.addEventListener("change", this._handleAppStateChange);
   }
 
   componentWillUnmount = () => {
+    this.removeListeners();
     AppState.removeEventListener("change", this._handleAppStateChange);
-    TrackPlayer.stop();
+    TrackPlayer.destroy();
     this.setState({ isPlaying: false })
   }
 
   _handleAppStateChange = (nextAppState) => {
-    if (this.state.appState.match(/active/) && nextAppState === "inactive" || "background") {
-      TrackPlayer.stop()
+    if (this.state.appState === APP_STATES.active && nextAppState === APP_STATES.inactive || APP_STATES.background) {
+      TrackPlayer.destroy()
       this.setState({ appState: nextAppState });
       this.setState({ isPlaying: false })
     }
   };
 
-  capability = () => {
-    TrackPlayer.addEventListener('remote-play', this.playPause)
-    TrackPlayer.addEventListener('remote-pause', this.playPause)
-    TrackPlayer.addEventListener('remote-stop', this.stop)
-    TrackPlayer.addEventListener('remote-stop', () => TrackPlayer.stop())
-    TrackPlayer.addEventListener('remote-previous', this.prev)
-    TrackPlayer.addEventListener('remote-next', this.next)
-    TrackPlayer.addEventListener('playback-track-changed', this.updateMetadata);
-    TrackPlayer.addEventListener('playback-metadata-received', this.updateMetadata);
+  addListeners = () => {
+    this.playListener = TrackPlayer.addEventListener('remote-play', this.playPause)
+    this.pauseListener = TrackPlayer.addEventListener('remote-play', this.playPause)
+    this.stopListener = TrackPlayer.addEventListener('remote-stop', this.stop)
+    this.prevListener = TrackPlayer.addEventListener('remote-previous', this.prev)
+    this.nextListener = TrackPlayer.addEventListener('remote-next', this.next)
+    this.metaChangedListener = TrackPlayer.addEventListener('playback-metadata-changed', this.updateMetadata)
+    this.metaReceivedListener = TrackPlayer.addEventListener('playback-metadata-received', this.updateMetadata)
+  }
+
+  removeListeners = () => {
+    this.playListener.remove()
+    this.pauseListener.remove()
+    this.stopListener.remove()
+    this.prevListener.remove()
+    this.nextListener.remove()
+    this.metaChangedListener.remove()
+    this.metaReceivedListener.remove()
   }
 
   updateMetadata = async (event) => {
@@ -92,6 +107,7 @@ class Player extends React.Component {
   }
 
   stop = async () => {
+    TrackPlayer.stop()
     this.setState({ isPlaying: false })
   }
 

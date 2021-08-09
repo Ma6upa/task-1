@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
-import Menu from './menu';
+import Menu from '../components/menu';
 import styles from '../styles/main.component.styles'
 import { Link } from "react-router-native";
 

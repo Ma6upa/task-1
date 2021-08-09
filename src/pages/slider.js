@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, View, Image, TouchableOpacity } from 'react-native';
-import Menu from './menu';
+import Menu from '../components/menu';
 import { connect } from 'react-redux';
 import { setRemote } from '../redux/actions';
 import { Link } from "react-router-native";
