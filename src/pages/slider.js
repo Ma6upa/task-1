@@ -4,7 +4,7 @@ import Menu from '../components/menu';
 import { connect } from 'react-redux';
 import { setRemote } from '../redux/actions';
 import { Link } from "react-router-native";
-import styles from '../styles/slider.component.styles'
+import styles from '../styles/sliderStyles'
 
 class Slider extends React.Component {
   constructor(props) {

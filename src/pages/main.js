@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
 import Menu from '../components/menu';
-import styles from '../styles/main.component.styles'
+import styles from '../styles/mainStyles'
 import { Link } from "react-router-native";
 
 class Main extends React.Component {

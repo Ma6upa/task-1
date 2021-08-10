@@ -20,7 +20,8 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
     flexDirection: 'row',
     width: 200,
-    paddingTop: 150,
+    marginTop: 200,
+    position: 'absolute'
   },
 
   mediaButtonsText: {

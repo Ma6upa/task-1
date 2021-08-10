@@ -5,7 +5,7 @@ import TrackPlayer, { pause, play, TrackPlayerEvents } from "react-native-track-
 import localAudio from '../audio/audio'
 import { connect } from 'react-redux'
 import { setRemoteAudio } from '../redux/actions'
-import styles from '../styles/player.component.styles'
+import styles from '../styles/playerStyles'
 
 const APP_STATES = {
   active: 'active',

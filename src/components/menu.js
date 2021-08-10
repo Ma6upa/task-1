@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../styles/menu.component.styles'
+import styles from '../styles/menuStyles'
 import { Text, View, Linking, TouchableOpacity, BackHandler } from 'react-native';
 import { Link } from "react-router-native";
 
